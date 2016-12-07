@@ -1,21 +1,21 @@
-#ifndef _FES_API_H_
-#define _FES_API_H_
+#ifndef _CPPGO_API_H_
+#define _CPPGO_API_H_
 
-#define fes_VERSION_MAJOR 1
-#define fes_VERSION_MINOR 0
-#define fes_VERSION ((fes_VERSION_MAJOR << 16) | fes_VERSION_MINOR)
+#define cppgo_VERSION_MAJOR 1
+#define cppgo_VERSION_MINOR 0
+#define cppgo_VERSION ((cppgo_VERSION_MAJOR << 16) | cppgo_VERSION_MINOR)
 
 #ifdef _MSC_VER
-    #ifdef fes_EXPORTS
-        #define fes_API __declspec(dllexport)
+    #ifdef cppgo_EXPORTS
+        #define cppgo_API __declspec(dllexport)
     #else
-        #define fes_API __declspec(dllimport)
+        #define cppgo_API __declspec(dllimport)
     #endif
 #else
-    #ifdef fes_EXPORTS
-        #define fes_API __attribute__((visibility("default")))
+    #ifdef cppgo_EXPORTS
+        #define cppgo_API __attribute__((visibility("default")))
     #else
-        #define fes_API
+        #define cppgo_API
     #endif
 #endif
 
