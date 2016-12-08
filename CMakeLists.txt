@@ -9,8 +9,13 @@ cmaki_find_package(python)
 cmaki_find_package(boost-python)
 
 cmaki2_library(hello tests/test_01.cpp)
-set_target_properties(hello PROPERTIES PREFIX "_")
 cmaki_install_file(tests/hello.py)
+
+enable_testing()
+add_test(	NAME hello_test
+			COMMAND python3.5 hello.py
+			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
+set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
 # for testing
 cmaki_find_package(entityx)
