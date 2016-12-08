@@ -19,8 +19,8 @@ set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_
 
 # install python
 # TODO: preserve permissions
-# bin/python3.5 lost exucution in copy
-cmaki_install_inside_dir(${PYTHON_PREFIX}/g++/Release)
+get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
+cmaki_install_inside_dir(${PYTHON3_DIR}/..)
 
 # for testing
 cmaki_find_package(entityx)
