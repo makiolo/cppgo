@@ -5,6 +5,6 @@ set(CMAKI_REPOSITORY "http://artifacts.myftp.biz:8080")
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmaki/cmaki.cmake")
 cmaki_setup()
 
-cmaki_find_package(entityx)
+cmaki_find_package(cppunix)
 
 # add_subdirectory(tests)
