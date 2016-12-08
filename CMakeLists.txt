@@ -13,9 +13,14 @@ cmaki_install_file(tests/hello.py)
 
 enable_testing()
 add_test(	NAME hello_test
-			COMMAND python3.5 hello.py
+			COMMAND ${PYTHON3_EXECUTABLE} hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
 set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
+
+# install python
+# TODO: preserve permissions
+# bin/python3.5 lost exucution in copy
+cmaki_install_inside_dir(${PYTHON_PREFIX}/g++/Release)
 
 # for testing
 cmaki_find_package(entityx)
