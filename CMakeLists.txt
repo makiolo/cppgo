@@ -13,8 +13,8 @@ set_target_properties(hello PROPERTIES PREFIX "")
 cmaki_install_file(tests/hello.py)
 
 enable_testing()
-add_test(	NAME hello_test
-			COMMAND ${PYTHON3_EXECUTABLE} hello.py
+add_test(		NAME hello_test
+			COMMAND ./bin/python3 hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
 set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
