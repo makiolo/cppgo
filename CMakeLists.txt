@@ -10,6 +10,15 @@ cmaki_find_package(boost-python)
 
 cmaki2_library(hello tests/test_01.cpp)
 set_target_properties(hello PROPERTIES PREFIX "")
+cmaki2_library(classes tests/test_02.cpp)
+set_target_properties(classes PROPERTIES PREFIX "")
+cmaki2_library(ctor tests/test_03.cpp)
+set_target_properties(ctor PROPERTIES PREFIX "")
+cmaki2_library(member tests/test_04.cpp)
+set_target_properties(member PROPERTIES PREFIX "")
+cmaki2_library(inheritance tests/test_05.cpp)
+set_target_properties(inheritance PROPERTIES PREFIX "")
+
 cmaki_install_file(tests/hello.py)
 
 enable_testing()
