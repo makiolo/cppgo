@@ -19,11 +19,11 @@ add_test(	NAME hello_test
 set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
 # install python
-# get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
-# cmaki_install_inside_dir(${PYTHON3_DIR}/..)
+get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
+get_filename_component(PYTHON3_PARENT_DIR ${PYTHON3_DIR} DIRECTORY)
+cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
 
 # for testing
 # cmaki_find_package(entityx)
 # cmaki_find_package(sdl2)
-# cmaki_find_package(ois
-
+# cmaki_find_package(ois)
