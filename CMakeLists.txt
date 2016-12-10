@@ -7,6 +7,7 @@ cmaki_setup()
 
 cmaki_find_package(python)
 cmaki_find_package(boost-python)
+cmaki_find_package(design-patterns-cpp14)
 
 cmaki2_library(hello tests/test_01.cpp)
 set_target_properties(hello PROPERTIES PREFIX "")
@@ -18,6 +19,8 @@ cmaki2_library(member tests/test_04.cpp)
 set_target_properties(member PROPERTIES PREFIX "")
 cmaki2_library(inheritance tests/test_05.cpp)
 set_target_properties(inheritance PROPERTIES PREFIX "")
+cmaki2_library(factory tests/test_06.cpp)
+set_target_properties(factory PROPERTIES PREFIX "")
 
 cmaki_install_file(tests/hello.py)
 
@@ -36,3 +39,4 @@ cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
 # cmaki_find_package(entityx)
 # cmaki_find_package(sdl2)
 # cmaki_find_package(ois)
+

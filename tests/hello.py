@@ -33,3 +33,16 @@ inheritance.fd(d)
 x = inheritance.factory()
 inheritance.fb(x)
 
+import factory
+print (dir(factory))
+base = factory.Base("hola", 33)
+a = factory.A("hi", 2)
+b = factory.B("hi", 4)
+print (base)
+print (a)
+print (b)
+
+f = factory.factory()
+factory.create("hola", "adios", 1234)
+factory.create("hola222", "adios333", 1234567)
+

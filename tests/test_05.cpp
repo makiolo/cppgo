@@ -44,4 +44,5 @@ BOOST_PYTHON_MODULE(inheritance)
     def("fb", fb);
     def("fd", fd);
     def("factory", factory, return_value_policy<manage_new_object>());
-}	
+}
+
