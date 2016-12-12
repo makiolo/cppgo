@@ -203,10 +203,8 @@ object create(tuple args, dict kwargs)
 
 BOOST_PYTHON_MODULE(factory)
 {
-	// export_cpptuple_conv();
-
-    class_<Base,  boost::noncopyable>("Base", init<std::string, int>())
-    ;
+    class_<Base, std::shared_ptr<Base> >("Base", init<std::string, int>())
+   	;
 
     class_<A, bases<Base> >("A", init<std::string, int>())
 	;
@@ -216,7 +214,13 @@ BOOST_PYTHON_MODULE(factory)
 
     class_<Base::factory >("factory")
 	;
-
+	
+    class_<Base::factory::registrator<A> >("regA")
+	;
+	
+    class_<Base::factory::registrator<B> >("regB")
+	;
+	
 	def("create", raw_function(create, 1));
 }
 
