@@ -15,10 +15,25 @@ public:
 		std::cout << "constructor " << _name << " - " << _q << std::endl;
 	}
 	virtual ~Base() { std::cout << "destruction" << std::endl; }
+	virtual std::string name() const { return "Base"; }
 
 protected:
 	std::string _name;
 	int _q;
+};
+
+struct BaseWrap : Base, wrapper<Base>
+{
+    virtual std::string name() const
+    {
+        if (override n = this->get_override("name"))
+            return n();
+        return Base::name();
+    }
+    std::string default_name() const
+    {
+        return this->Base::name();
+    }
 };
 
 class A : public Base
@@ -27,6 +42,7 @@ public:
 	DEFINE_KEY(A)
 	explicit A(std::string name, int q) : Base(name, q) { ; }
 	virtual ~A() = default;
+	virtual std::string name() const { return "A"; }
 };
 
 class B : public Base
@@ -34,6 +50,7 @@ class B : public Base
 public:
 	explicit B(std::string name, int q) : Base(name, q) { ; }
 	virtual ~B() = default;
+	virtual std::string name() const { return "B"; }
 };
 
 // no-macros option
@@ -226,16 +243,14 @@ object create(tuple args, dict kwargs)
 
 BOOST_PYTHON_MODULE(factory)
 {
-    class_<Base, std::shared_ptr<Base> >("Base", init<std::string, int>())
-   	;
-
-    class_<A, bases<Base>, std::shared_ptr<A> >("A", init<std::string, int>())
+	class_<Base, std::shared_ptr<Base> >("_Base", init<std::string, int>())
 	;
-
-    class_<B, bases<Base>, std::shared_ptr<B> >("B", init<std::string, int>())
+	
+	class_<BaseWrap, boost::noncopyable >("Base", init<std::string, int>())
+		.def("name", &Base::name, &BaseWrap::default_name)
 	;
-
-    def("create", raw_function(create, 1));
+	
+   	def("create", raw_function(create, 1));
 
     /*
     class_<Base::factory, boost::noncopyable>("factory")
