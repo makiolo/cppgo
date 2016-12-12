@@ -212,7 +212,7 @@ object create(tuple args, dict kwargs)
 		std::cout << "stringstream: " << p << std::endl;
 	}
 
-	return object( f.create("A", "created A since python using C++", 666) );
+	return object( Base::factory::instance().create("A", "created A since python using C++", 666) );
 }
 
 BOOST_PYTHON_MODULE(factory)
