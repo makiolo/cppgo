@@ -206,19 +206,19 @@ BOOST_PYTHON_MODULE(factory)
     class_<Base, std::shared_ptr<Base> >("Base", init<std::string, int>())
    	;
 
-    class_<A, bases<Base> >("A", init<std::string, int>())
+    class_<A, bases<Base>, std::shared_ptr<A> >("A", init<std::string, int>())
 	;
 
-    class_<B, bases<Base> >("B", init<std::string, int>())
+    class_<B, bases<Base>, std::shared_ptr<B> >("B", init<std::string, int>())
 	;
 
-    class_<Base::factory >("factory")
+    class_<Base::factory, boost::noncopyable>("factory")
 	;
 	
-    class_<Base::factory::registrator<A> >("regA")
+    class_<Base::factory::registrator<A>, boost::noncopyable>("regA", init<Base::factory>())
 	;
 	
-    class_<Base::factory::registrator<B> >("regB")
+    class_<Base::factory::registrator<B>, boost::noncopyable>("regB", init<Base::factory>())
 	;
 	
 	def("create", raw_function(create, 1));
