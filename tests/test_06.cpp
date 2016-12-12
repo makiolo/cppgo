@@ -48,6 +48,15 @@ namespace std {
 	};
 }
 
+namespace regA
+{
+	Base::factory::registrator<A> reg;
+}
+namespace regB
+{
+	Base::factory::registrator<B> reg;
+}
+
 // 	Base::factory f;
 // 	Base::factory::registrator<A> reg1(f);
 // 	Base::factory::registrator<B> reg2(f);
@@ -226,6 +235,9 @@ BOOST_PYTHON_MODULE(factory)
     class_<B, bases<Base>, std::shared_ptr<B> >("B", init<std::string, int>())
 	;
 
+    def("create", raw_function(create, 1));
+
+    /*
     class_<Base::factory, boost::noncopyable>("factory")
 	;
 	
@@ -234,6 +246,5 @@ BOOST_PYTHON_MODULE(factory)
 	
     class_<Base::factory::registrator<B>, boost::noncopyable>("regB")
 	;
-	
-	def("create", raw_function(create, 1));
+    */
 }
