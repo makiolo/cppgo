@@ -2,6 +2,10 @@
 #include <assert.h>
 #include <tuple>
 #include <dp14/factory.h>
+#include <boost/python.hpp>
+
+using namespace boost::python;
+namespace py = boost::python;
 
 class Base
 {
@@ -22,18 +26,22 @@ protected:
 	int _q;
 };
 
-struct BaseWrap : Base, wrapper<Base>
+struct BaseWrap : Base, py::wrapper<Base>
 {
-    virtual std::string name() const
-    {
-        if (override n = this->get_override("name"))
-            return n();
-        return Base::name();
-    }
-    std::string default_name() const
-    {
-        return this->Base::name();
-    }
+	explicit BaseWrap(std::string name, int q) : Base(name, q) { ; }
+	virtual ~BaseWrap() = default;
+	
+	virtual std::string name() const
+	{
+		if (override n = this->get_override("name"))
+		    return n();
+		return Base::name();
+	}
+	
+	std::string default_name() const
+	{
+		return this->Base::name();
+	}
 };
 
 class A : public Base
@@ -85,11 +93,6 @@ namespace regB
 // 		std::shared_ptr<Base> b1 = f.create<B>("first parameter", 2);
 // 		std::shared_ptr<B> b2 = f.create<B>("first parameter", 2);
 // 		std::shared_ptr<Base> b3 = f.create("B", "first parameter", 2);
-
-#include <boost/python.hpp>
-using namespace boost::python;
-namespace py = boost::python;
-
 
 // http://codereview.stackexchange.com/questions/9202/boost-python-converter-for-stdtuple
 //
