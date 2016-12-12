@@ -9,21 +9,16 @@ cmaki_find_package(python)
 cmaki_find_package(boost-python)
 cmaki_find_package(design-patterns-cpp14)
 
-cmaki2_library(hello tests/test_01.cpp)
-# set_target_properties(hello PROPERTIES PREFIX "")
-cmaki2_library(classes tests/test_02.cpp)
-# set_target_properties(classes PROPERTIES PREFIX "")
-cmaki2_library(ctor tests/test_03.cpp)
-# set_target_properties(ctor PROPERTIES PREFIX "")
-cmaki2_library(member tests/test_04.cpp)
-# set_target_properties(member PROPERTIES PREFIX "")
-cmaki2_library(inheritance tests/test_05.cpp)
-# set_target_properties(inheritance PROPERTIES PREFIX "")
-cmaki2_library(factory tests/test_06.cpp)
-# set_target_properties(factory PROPERTIES PREFIX "")
+cmaki_python_library(hello tests/test_01.cpp)
+cmaki_python_library(classes tests/test_02.cpp)
+cmaki_python_library(ctor tests/test_03.cpp)
+cmaki_python_library(member tests/test_04.cpp)
+cmaki_python_library(inheritance tests/test_05.cpp)
+cmaki_python_library(factory tests/test_06.cpp)
+
+# cmaki_python_test(hello tests/hello.py)
 
 cmaki_install_file(tests/hello.py)
-
 enable_testing()
 add_test(		NAME hello_test
 			COMMAND ./bin/python3 hello.py
