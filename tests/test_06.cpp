@@ -56,22 +56,11 @@ public:
 class B : public Base
 {
 public:
+	DEFINE_KEY(B)
 	explicit B(std::string name, int q) : Base(name, q) { ; }
 	virtual ~B() = default;
 	virtual std::string name() const { return "B"; }
 };
-
-// no-macros option
-namespace std {
-	template <>
-	struct hash<B>
-	{
-		size_t operator()() const
-		{
-			return std::hash<std::string>()("B");
-		}
-	};
-}
 
 namespace regA
 {
@@ -81,18 +70,6 @@ namespace regB
 {
 	Base::factory::registrator<B> reg;
 }
-
-// 	Base::factory f;
-// 	Base::factory::registrator<A> reg1(f);
-// 	Base::factory::registrator<B> reg2(f);
-// 		// equivalent ways of create A
-// 		std::shared_ptr<Base> a1 = f.create<A>("first parameter", 2);
-// 		std::shared_ptr<A> a2 = f.create<A>("first parameter", 2);
-// 		std::shared_ptr<Base> a3 = f.create("A", "first parameter", 2);
-// 		// equivalent ways of create B
-// 		std::shared_ptr<Base> b1 = f.create<B>("first parameter", 2);
-// 		std::shared_ptr<B> b2 = f.create<B>("first parameter", 2);
-// 		std::shared_ptr<Base> b3 = f.create("B", "first parameter", 2);
 
 // http://codereview.stackexchange.com/questions/9202/boost-python-converter-for-stdtuple
 //
@@ -207,7 +184,6 @@ namespace regB
 // 	std::cout << "tuple: str str int" << std::endl;
 // }
 
-
 template <typename T, std::size_t... Indices>
 auto vectorToTupleHelper(const std::vector<T>& v, std::index_sequence<Indices...>) {
 	return std::make_tuple(v[Indices]...);
@@ -227,21 +203,12 @@ std::ostream& operator<<(std::ostream& os, const py::str& o)
 
 object create(tuple args, dict kwargs)
 {
-	std::vector< std::string > parms;
-	for(int i = 1; i < len(args); ++i)
+	for(int i = 0; i < len(args); ++i)
 	{
-		// std::stringstream ss;
-		// ss << py::str( args[i] );
-		// parms.emplace_back(ss.str());
 		std::cout << "cout: " << py::str(args[i]) << std::endl;
 	}
-
-	for(auto p : parms)
-	{
-		std::cout << "stringstream: " << p << std::endl;
-	}
-
-	return object( Base::factory::instance().create("A", "created A since python using C++", 666) );
+	
+	return object( Base::factory::instance().create( py::extract<std::string>(args[1]), py::extract<std::string>(args[2]), py::extract<int>(args[3])) );
 }
 
 BOOST_PYTHON_MODULE(factory)
