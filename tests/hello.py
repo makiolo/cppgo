@@ -27,8 +27,6 @@ b = inheritance.Base()
 d = inheritance.Derived()
 inheritance.fb(b)
 inheritance.fb(d)
-# not possible, fd is only for Derived objects
-# inheritance.fd(b)
 inheritance.fd(d)
 x = inheritance.factory()
 inheritance.fb(x)
@@ -36,15 +34,16 @@ inheritance.fb(x)
 import factory
 print (dir(factory))
 
-f1 = factory.create("A", "hola", "adios", 1234)
-f2 = factory.create("B", "hola222", "adios333", 1234567)
-print (f1)
-print (f2)
-
 class PythonDerived(factory.Base):
   def name(self):
     return "PythonDerived"
 
+f1 = factory.create("A", "hola", "adios", 1234)
+f2 = factory.create("B", "hola222", "adios333", 1234567)
+print (f1)
+print (f1.name())
+print (f2)
+print (f2.name())
 pd = PythonDerived("from python", 1234)
 print (pd)
 print (pd.name())
