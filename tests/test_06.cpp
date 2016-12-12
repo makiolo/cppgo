@@ -215,12 +215,11 @@ BOOST_PYTHON_MODULE(factory)
     class_<Base::factory, boost::noncopyable>("factory")
 	;
 	
-    class_<Base::factory::registrator<A>, boost::noncopyable>("regA", init<Base::factory>())
+    class_<Base::factory::registrator<A>, boost::noncopyable>("regA")
 	;
 	
-    class_<Base::factory::registrator<B>, boost::noncopyable>("regB", init<Base::factory>())
+    class_<Base::factory::registrator<B>, boost::noncopyable>("regB")
 	;
 	
 	def("create", raw_function(create, 1));
 }
-
