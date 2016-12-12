@@ -45,6 +45,6 @@ class PythonDerived(factory.Base):
   def name(self):
     return "PythonDerived"
 
-pd = PythonDerived()
+pd = PythonDerived("from python", 1234)
 print (pd)
 print (pd.name())
