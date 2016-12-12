@@ -46,3 +46,7 @@ f = factory.factory()
 factory.create("hola", "adios", 1234)
 factory.create("hola222", "adios333", 1234567)
 
+rA = factory.regA(f)
+rB = factory.regB(f)
+print (rA)
+print (rB)
