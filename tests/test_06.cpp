@@ -178,6 +178,19 @@ namespace py = boost::python;
 // 	std::cout << "tuple: str str int" << std::endl;
 // }
 
+
+template <typename T, std::size_t... Indices>
+auto vectorToTupleHelper(const std::vector<T>& v, std::index_sequence<Indices...>) {
+	return std::make_tuple(v[Indices]...);
+}
+
+template <std::size_t N, typename T>
+auto vectorToTuple(const std::vector<T>& v) {
+	assert(v.size() >= N);
+	return vectorToTupleHelper(v, std::make_index_sequence<N>());
+}
+
+
 std::ostream& operator<<(std::ostream& os, const py::str& o)
 {
     return os << py::extract<std::string>(py::str(o))();
@@ -186,19 +199,20 @@ std::ostream& operator<<(std::ostream& os, const py::str& o)
 object create(tuple args, dict kwargs)
 {
 	std::vector< std::string > parms;
-    for(int i = 1; i < len(args); ++i) {
+	for(int i = 1; i < len(args); ++i)
+	{
 		// std::stringstream ss;
 		// ss << py::str( args[i] );
 		// parms.emplace_back(ss.str());
 		std::cout << "cout: " << py::str(args[i]) << std::endl;
-    }
+	}
 
 	for(auto p : parms)
 	{
 		std::cout << "stringstream: " << p << std::endl;
 	}
 
-	return object();
+	return object( f.create("A", "created A since python using C++", 666) );
 }
 
 BOOST_PYTHON_MODULE(factory)
