@@ -19,10 +19,10 @@ cmaki_python_library(factory tests/test_06.cpp)
 # proposal
 # cmaki_python_test(hello tests/hello.py)
 
-cmaki_install_file_into(tests/hello.py tests/)
+cmaki_install_file(tests/hello.py)
 enable_testing()
 add_test(		NAME hello_test
-			COMMAND ./bin/python3 tests/hello.py
+			COMMAND ./bin/python3 hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
 set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
