@@ -35,14 +35,16 @@ inheritance.fb(x)
 
 import factory
 print (dir(factory))
-base = factory.Base("hola", 33)
-a = factory.A("hi", 2)
-b = factory.B("hi", 4)
-print (base)
-print (a)
-print (b)
 
 f1 = factory.create("A", "hola", "adios", 1234)
 f2 = factory.create("B", "hola222", "adios333", 1234567)
 print (f1)
 print (f2)
+
+class PythonDerived(factory.Base):
+  def name(self):
+    return "PythonDerived"
+
+pd = PythonDerived()
+print (pd)
+print (pd.name())
