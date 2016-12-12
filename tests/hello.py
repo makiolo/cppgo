@@ -43,10 +43,12 @@ print (a)
 print (b)
 
 f = factory.factory()
-factory.create("hola", "adios", 1234)
-factory.create("hola222", "adios333", 1234567)
-
 rA = factory.regA()
 rB = factory.regB()
 print (rA)
 print (rB)
+
+f1 = factory.create("hola", "adios", 1234)
+f2 = factory.create("hola222", "adios333", 1234567)
+print (f1)
+print (f2)
