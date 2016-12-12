@@ -195,7 +195,6 @@ auto vectorToTuple(const std::vector<T>& v) {
 	return vectorToTupleHelper(v, std::make_index_sequence<N>());
 }
 
-
 std::ostream& operator<<(std::ostream& os, const py::str& o)
 {
     return os << py::extract<std::string>(py::str(o))();
@@ -208,7 +207,10 @@ object create(tuple args, dict kwargs)
 		std::cout << "cout: " << py::str(args[i]) << std::endl;
 	}
 	
-	return object( Base::factory::instance().create( py::extract<std::string>(args[1]), py::extract<std::string>(args[2]), py::extract<int>(args[3])) );
+	return object( Base::factory::instance().create( 	py::extract<std::string>(args[1])(), 
+								py::extract<std::string>(args[2])(), 
+								py::extract<int>(args[3])() 
+		      					));
 }
 
 BOOST_PYTHON_MODULE(factory)
