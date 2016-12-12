@@ -207,7 +207,7 @@ object create(tuple args, dict kwargs)
 		std::cout << "cout: " << py::str(args[i]) << std::endl;
 	}
 	
-	return object( Base::factory::instance().create( 	std::string( py::extract<const char*>(py::str(args[1]))() ), 
+	return object( Base::factory::instance().create( 	"A", 
 								std::string( py::extract<const char*>(py::str(args[2]))() ), 
 								py::extract<int>(args[3])() 
 		      					));
