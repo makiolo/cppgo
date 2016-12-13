@@ -38,8 +38,8 @@ class PythonDerived(factory.Base):
   def name(self):
     return "PythonDerived"
 
-f1 = factory.create("A", "hola", "adios", 1234)
-f2 = factory.create("B", "hola222", "adios333", 1234567)
+f1 = factory.create("A", "hi", 1234)
+f2 = factory.create("B", "hizzz", 1234567)
 print (f1)
 print (f1.name())
 print (f2)
