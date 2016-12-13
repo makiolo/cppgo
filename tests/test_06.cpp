@@ -207,9 +207,9 @@ object create(tuple args, dict kwargs)
 		std::cout << "cout: " << py::str(args[i]) << std::endl;
 	}
 	
-	return object( Base::factory::instance().create( 	"A", 
-								std::string( py::extract<const char*>(py::str(args[2]))() ), 
-								py::extract<int>(args[3])() 
+	return object( Base::factory::instance().create( 	std::string( py::extract<const char*>(py::str(args[0]))() ), 
+								std::string( py::extract<const char*>(py::str(args[1]))() ), 
+								py::extract<int>(args[2])() 
 		      					));
 }
 
@@ -223,15 +223,4 @@ BOOST_PYTHON_MODULE(factory)
 	;
 	
    	def("create", raw_function(create, 1));
-
-    /*
-    class_<Base::factory, boost::noncopyable>("factory")
-	;
-	
-    class_<Base::factory::registrator<A>, boost::noncopyable>("regA")
-	;
-	
-    class_<Base::factory::registrator<B>, boost::noncopyable>("regB")
-	;
-    */
 }
