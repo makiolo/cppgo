@@ -280,7 +280,8 @@ TEST(PythonTest, Test1)
 	// Py_SetPythonHome(python_home);
 	Py_NoSiteFlag=1;
 	// Py_DebugFlag=1;
-	Py_SetProgramName(const_cast<wchar*>("test_06"));
+	//Py_SetProgramName(const_cast<wchar*>("test_06"));
+	Py_SetProgramName("test_06");
 	// PyImport_AppendInittab("Engine", initEngine);
 	Py_InitializeEx(0);
 	
