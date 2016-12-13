@@ -44,6 +44,9 @@ print (f1)
 print (f1.name())
 print (f2)
 print (f2.name())
+
+factory.register("hello.PythonDerived")
+
 pd = PythonDerived("from python", 1234)
 print (pd)
 print (pd.name())
