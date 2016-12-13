@@ -235,13 +235,52 @@ BOOST_PYTHON_MODULE(factory)
 
 class PythonTest : testing::Test { };
 
+/*
+template <typename ... Args>
+void call_python(const std::string& name_function, const Args& ... data)
+{
+	try
+	{
+		// http://www.boost.org/doc/libs/1_57_0/libs/python/doc/v2/callbacks.html#argument_handling
+		//output[name_function](std::forward<Args>(data)...);
+		output[name_function](data...);
+		//output.attr(name_function.c_str())(data...);
+	}
+	catch (const boost::python::error_already_set& e)
+	{
+		(void)e;
+
+		PyObject *ptype, *pvalue, *ptraceback;
+		PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+		boost::python::handle<> hType(ptype);
+		boost::python::object extype(hType);
+		std::string strErrorMessage = boost::python::extract<std::string>(pvalue);
+		if (ptraceback)
+		{
+			boost::python::handle<> hTraceback(ptraceback);
+			boost::python::object traceback(hTraceback);
+
+			long lineno = boost::python::extract<long>(traceback.attr("tb_lineno"));
+			std::string filename = boost::python::extract<std::string>(traceback.attr("tb_frame").attr("f_code").attr("co_filename"));
+			std::string funcname = boost::python::extract<std::string>(traceback.attr("tb_frame").attr("f_code").attr("co_name"));
+			LOGE("[Python] %s:%ld: <%s> %s", FileSystem::basename(filename).c_str(), lineno, funcname.c_str(), strErrorMessage.c_str());
+		}
+		else
+		{
+			LOGE("[Python] %s", strErrorMessage.c_str());
+		}
+	}
+}
+*/
+
 TEST(PythonTest, Test1)
 {
 	// char* python_home = const_cast<char*>(ss2.str().c_str());
 	// Py_SetPythonHome(python_home);
 	Py_NoSiteFlag=1;
 	// Py_DebugFlag=1;
-	Py_SetProgramName(const_cast<char*>("test_06"));
+	Py_SetProgramName(const_cast<wchar*>("test_06"));
 	// PyImport_AppendInittab("Engine", initEngine);
 	Py_InitializeEx(0);
 	
