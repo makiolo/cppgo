@@ -215,14 +215,13 @@ object create(tuple args, dict kwargs)
 
 object register_impl(tuple args, dict kwargs)
 {
-	std::string key( py::extract<const char*>(py::str(args[0]))() );
-	std::cout << "register: " << key << std::endl;
+	std::cout << "register: " << std::string( py::extract<const char*>(py::str(args[0]))() ) << std::endl;
 	return object();
 }
 
 BOOST_PYTHON_MODULE(factory)
 {
-	class_<Base, std::shared_ptr<Base> >("_Base", init<std::string, int>())
+	class_<Base, std::shared_ptr<Base> >("__Base__", init<std::string, int>())
 	;
 	
 	class_<BaseWrap, boost::noncopyable >("Base", init<std::string, int>())
