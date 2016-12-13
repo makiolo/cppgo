@@ -213,6 +213,13 @@ object create(tuple args, dict kwargs)
 		      					));
 }
 
+object register_impl(tuple args, dict kwargs)
+{
+	std::string key( py::extract<const char*>(py::str(args[0]))() );
+	std::cout << "register: " << key << std::endl;
+	return object();
+}
+
 BOOST_PYTHON_MODULE(factory)
 {
 	class_<Base, std::shared_ptr<Base> >("_Base", init<std::string, int>())
@@ -222,5 +229,6 @@ BOOST_PYTHON_MODULE(factory)
 		.def("name", &Base::name, &BaseWrap::default_name)
 	;
 	
-   	def("create", raw_function(create, 1));
+   	def("create", raw_function(create));
+	def("register", raw_function(register_impl));
 }
