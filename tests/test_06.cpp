@@ -3,6 +3,12 @@
 #include <tuple>
 #include <dp14/factory.h>
 #include <boost/python.hpp>
+#include <boost/python/detail/wrap_python.hpp>
+#include <boost/python/object.hpp>
+#include <boost/python/import.hpp>
+#include <boost/python/exec.hpp>
+#include <boost/python/dict.hpp>
+#include <boost/python/extract.hpp>
 #include <gtest/gtest.h>
 
 using namespace boost::python;
