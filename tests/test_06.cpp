@@ -3,6 +3,7 @@
 #include <tuple>
 #include <dp14/factory.h>
 #include <boost/python.hpp>
+#include <gtest/gtest.h>
 
 using namespace boost::python;
 namespace py = boost::python;
@@ -230,4 +231,17 @@ BOOST_PYTHON_MODULE(factory)
 	
    	def("create", raw_function(create));
 	def("register", raw_function(register_impl));
+}
+
+class PythonTest : testing::Test { };
+
+TEST(PythonTest, Test1)
+{
+	// char* python_home = const_cast<char*>(ss2.str().c_str());
+	// Py_SetPythonHome(python_home);
+	Py_NoSiteFlag=1;
+	// Py_DebugFlag=1;
+	Py_SetProgramName(const_cast<char*>("test_06"));
+	// PyImport_AppendInittab("Engine", initEngine);
+	Py_InitializeEx(0);
 }
