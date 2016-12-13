@@ -244,4 +244,35 @@ TEST(PythonTest, Test1)
 	Py_SetProgramName(const_cast<char*>("test_06"));
 	// PyImport_AppendInittab("Engine", initEngine);
 	Py_InitializeEx(0);
+	
+	try
+	{
+		py::object mainmodule = py::import("__main__");
+		py::object globals = mainmodule.attr("__dict__");
+		py::object result = py::exec_file("hello.py", globals, globals);
+		output = py::extract<py::dict>(globals);
+	}
+	catch (const py::error_already_set& /*e*/)
+	{
+		PyObject *ptype, *pvalue, *ptraceback;
+		PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+		py::handle<> hType(ptype);
+		py::object extype(hType);
+		std::string strErrorMessage = py::extract<std::string>(pvalue);
+		if (ptraceback)
+		{
+			py::handle<> hTraceback(ptraceback);
+			py::object traceback(hTraceback);
+
+			long lineno = py::extract<long>(traceback.attr("tb_lineno"));
+			std::string filename = py::extract<std::string>(traceback.attr("tb_frame").attr("f_code").attr("co_filename"));
+			std::string funcname = py::extract<std::string>(traceback.attr("tb_frame").attr("f_code").attr("co_name"));
+			printf("[Python] hello.py:%ld: <%s> %s", lineno, funcname.c_str(), strErrorMessage.c_str());
+		}
+		else
+		{
+			printf("[Python] %s", strErrorMessage.c_str());
+		}
+	}
 }
