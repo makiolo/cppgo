@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import logging
+import imp
+
 import hello
 print (hello.greet())
 
@@ -50,3 +53,36 @@ factory.register("hello.PythonDerived")
 pd = PythonDerived("from python", 1234)
 print (pd)
 print (pd.name())
+
+commands = {}
+def load_simple_tasks(plugin_folder, main_module = '__init__'):
+    def load_plugin(plugin):
+        return imp.load_module(main_module, *plugin["info"])
+    if os.path.isdir(plugin_folder):
+        # create plugin list
+        possibleplugins = os.listdir(plugin_folder)
+        plugins = []
+        for i in possibleplugins:
+            location = os.path.join(plugin_folder, i)
+            if not os.path.isdir(location) or not main_module + ".py" in os.listdir(location):
+                continue
+            info = imp.find_module(main_module, [location])
+            plugins.append({"name": i, "info": info})
+        # load each plugin
+        for p in plugins:
+            name = p["name"]
+            logging.debug("Loading plugin " + name)
+            plugin = load_plugin(p)
+            if name not in commands:
+                try:
+                    plugin_class = getattr(plugin, name)
+                    if issubclass(plugin_class, TaskSimple):
+                        commands[name] = plugin_class
+                    else:
+                        logging.info('Error in plugin %s. Your class "%s" don\'t comply with "TaskSimple" interface.' % (name, name))
+                except AttributeError:
+                    logging.info('Error in plugin %s. Don\'t found a class with name "%s".' % (name, name))
+            else:
+                logging.error('A command with name %s is already used. Error registering plugin.' % name)
+    else:
+        logging.debug('No plugins folder found in %s.' % os.path.abspath(plugin_folder))
