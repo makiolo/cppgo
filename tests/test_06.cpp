@@ -302,14 +302,14 @@ TEST(PythonTest, Test1)
 	Py_Initialize();
 	/*
 	PyRun_SimpleString(	"from time import time,ctime\n"
-				"print('Today is', ctime(time()))\n");	
-	*/	
+				"print('Today is', ctime(time()))\n");
+	*/
 	try
 	{
 		py::object mainmodule = py::import("__main__");
 		py::object globals = mainmodule.attr("__dict__");
 		py::object result = py::exec_file("hello.py", globals, globals);
-		output = py::extract<py::dict>(globals);
+		py::dict output = py::extract<py::dict>(globals);
 	}
 	catch (const py::error_already_set& /*e*/)
 	{
