@@ -22,7 +22,7 @@ get_filename_component(PYTHON3_PARENT_DIR ${PYTHON3_DIR} DIRECTORY)
 cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
 
 # test python embed
-cmaki2_gtest(test_06 tests/test_06.cpp)
+cmaki2_gtest(test_06 tests/test_06.cpp PTHREADS)
 set_tests_properties(test_06_exe PROPERTIES ENVIRONMENT "PYTHONHOME=${PYTHON3_PARENT_DIR}")
 
 # proposal
