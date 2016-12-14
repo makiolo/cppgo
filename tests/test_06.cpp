@@ -293,7 +293,7 @@ TEST(PythonTest, Test1)
 	Py_InitializeEx(0);
 	*/
 	
-	wchar_t *program = Py_DecodeLocale(argv[0], NULL);
+	wchar_t *program = Py_DecodeLocale("test_06", NULL);
 	if (program == NULL) {
 		fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
 		exit(1);
