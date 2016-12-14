@@ -282,6 +282,7 @@ void call_python(const std::string& name_function, const Args& ... data)
 
 TEST(PythonTest, Test1)
 {
+	/*
 	// char* python_home = const_cast<char*>(ss2.str().c_str());
 	// Py_SetPythonHome(python_home);
 	Py_NoSiteFlag=1;
@@ -290,7 +291,19 @@ TEST(PythonTest, Test1)
 	Py_SetProgramName(L"test_06");
 	// PyImport_AppendInittab("Engine", initEngine);
 	Py_InitializeEx(0);
+	*/
 	
+	wchar_t *program = Py_DecodeLocale(argv[0], NULL);
+	if (program == NULL) {
+		fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
+		exit(1);
+	}
+	Py_SetProgramName(program);  /* optional but recommended */
+	Py_Initialize();
+	/*
+	PyRun_SimpleString(	"from time import time,ctime\n"
+				"print('Today is', ctime(time()))\n");	
+	*/	
 	try
 	{
 		py::object mainmodule = py::import("__main__");
@@ -321,4 +334,7 @@ TEST(PythonTest, Test1)
 			printf("[Python] %s", strErrorMessage.c_str());
 		}
 	}
+
+	Py_Finalize();
+	PyMem_RawFree(program);
 }
