@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import sys
-sys.path.append(os.getcwd())
-print (sys.path)
-
 import logging
 import imp
 
@@ -40,11 +36,10 @@ x = inheritance.factory()
 inheritance.fb(x)
 
 import factory
-print (dir(factory))
 
 class PythonDerived(factory.Base):
-  def name(self):
-    return "base: {} and derived: {}".format(super(PythonDerived, self).name(), "PythonDerived")
+    def name(self):
+        return "base: {} and derived: {}".format(super(PythonDerived, self).name(), "PythonDerived")
 
 f1 = factory.create("A", "hi", 1234)
 f2 = factory.create("B", "hizzz", 1234567)
@@ -54,10 +49,6 @@ print (f2)
 print (f2.name())
 
 factory.register("hello.PythonDerived")
-
-pd = PythonDerived("from python", 1234)
-print (pd)
-print (pd.name())
 
 commands = {}
 def load_simple_tasks(plugin_folder, main_module = '__init__'):
@@ -93,11 +84,11 @@ def load_simple_tasks(plugin_folder, main_module = '__init__'):
         logging.debug('No plugins folder found in %s.' % os.path.abspath(plugin_folder))
 
 def func1(n1, n2, n3, f1, str1):
-    print ("exec in python {} {} {} {} {}".format(n1, n2, n3, f1, str1))
-
-def func2(str1):
-    print ("{}".format(str1))
-
-if __name__ == '__main__':
-    print ("loading embed python.")
+    for fl in os.listdir('.'):
+        print (fl)
+        if (fl == 'teelogging.txt'):
+            print ("log .......")
+            with open('teelogging.txt', 'rt') as f:
+                content = f.read()
+            print(content)
 

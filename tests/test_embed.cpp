@@ -43,25 +43,18 @@ TEST(PythonTest, Test1)
 	{
 		py::object mainmodule = py::import("__main__");
 		py::object globals = mainmodule.attr("__dict__");
-		py::object result = py::exec_file("hello.py", globals, globals);
-		py::dict module_dict = py::extract<py::dict>(globals);
-		
-		// call static method
-		// py::call<void>(module_dict, "func1", 1, 2, 3, 5.0f, "hiiii from c++");
-		LOGI("call func1() in hello.py ...");
-		module_dict["func1"](1, 2, 3, 5.0f, "hiiii from c++");
-		
-		// instance class
-		//py::str name_derived = py::call_method<py::str>(instance_derived, "name")
-		LOGI("call PythonDerived.name() class in hello.py ...");
-		py::object class_derived = module_dict["PythonDerived"];
+		py::exec_file("hello.py", globals, globals);
+
+		// instance class and call method
+		LOGI("call PythonDerived.name() class in hello.py");
+		py::object class_derived = globals["PythonDerived"];
 		py::object instance_derived = class_derived("from c++", 9876);
-		py::object result_derived = instance_derived["name"]();
-		std::cout << "PythonDerived.name() = " << py::extract<std::string>(py::str(result_derived))() << std::endl;
-		
-		// 
-		// std::shared_ptr<Base> a = asla("hello.PythonDerived");
-		// a->ddd();
+		py::object result = instance_derived.attr("name")();
+		std::cout << "PythonDerived.name() = " << py::extract<std::string>(py::str(result))() << std::endl;
+
+		// call static method
+		LOGI("call func1() in hello.py");
+		globals["func1"](1, 2, 3, 5.0f, "hiiii from c++");
 	}
 	catch (const py::error_already_set& /*e*/)
 	{
@@ -69,3 +62,4 @@ TEST(PythonTest, Test1)
 		PyErr_Print();
 	}
 }
+
