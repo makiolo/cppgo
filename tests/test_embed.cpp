@@ -47,16 +47,17 @@ TEST(PythonTest, Test1)
 		py::dict module_dict = py::extract<py::dict>(globals);
 		
 		// call static method
+		// py::call<void>(module_dict, "func1", 1, 2, 3, 5.0f, "hiiii from c++");
 		LOGI("call func1() in hello.py ...");
 		module_dict["func1"](1, 2, 3, 5.0f, "hiiii from c++");
-		// py::call<void>(module_dict, "func1", 1, 2, 3, 5.0f, "hiiii from c++");
 		
 		// instance class
+		//py::str name_derived = py::call_method<py::str>(instance_derived, "name")
 		LOGI("call PythonDerived.name() class in hello.py ...");
 		py::object class_derived = module_dict["PythonDerived"];
 		py::object instance_derived = class_derived("from c++", 9876);
-		py::str name_derived = py::call_method<py::str>(instance_derived, "name")
-		std::cout << "PythonDerived.name() = " << py::extract<std::string>(name_derived)() << std::endl;
+		py::object result_derived = instance_derived["name"]();
+		std::cout << "PythonDerived.name() = " << py::extract<std::string>(py::str(result_derived))() << std::endl;
 		
 		// 
 		// std::shared_ptr<Base> a = asla("hello.PythonDerived");
