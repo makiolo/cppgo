@@ -8,6 +8,7 @@ cmaki_setup()
 cmaki_find_package(python)
 cmaki_find_package(boost-python)
 cmaki_find_package(design-patterns-cpp14)
+cmaki_find_package(teelogging)
 
 cmaki_python_library(hello tests/test_01.cpp)
 cmaki_python_library(classes tests/test_02.cpp)
@@ -33,8 +34,3 @@ add_test(		NAME hello_test
 			COMMAND ./bin/python3 hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
 set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-
-# for testing
-# cmaki_find_package(entityx)
-# cmaki_find_package(sdl2)
-# cmaki_find_package(ois)
