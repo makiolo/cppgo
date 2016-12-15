@@ -1,6 +1,7 @@
 #include <iostream>
 #include <assert.h>
 #include <tuple>
+#include <teelogging/teelogging.h>
 #include <boost/python.hpp>
 #include <gtest/gtest.h>
 
@@ -15,6 +16,7 @@ struct PythonEmbed
 {
 	PythonEmbed()
 	{
+		LOGI("creating python ...");
 		program = Py_DecodeLocale("python_embed", NULL);
 		if (program == NULL) {
 			fprintf(stderr, "Fatal error: cannot decode\n");
@@ -26,6 +28,7 @@ struct PythonEmbed
 
 	~PythonEmbed()
 	{
+		LOGI("destroying python ...");
 		Py_Finalize();
 		PyMem_RawFree(program);
 	}
@@ -44,12 +47,14 @@ TEST(PythonTest, Test1)
 		py::dict module_dict = py::extract<py::dict>(globals);
 		
 		// call static method
+		LOGI("call func1() in hello.py ...");
 		module_dict["func1"](1, 2, 3, 5.0f, "hiiii from c++");
 		
 		// instance class
+		LOGI("instanciate PythonDerived class in hello.py ...");
 		py::object class_derived = module_dict["PythonDerived"];
 		py::object instance_derived = class_derived("from c++", 9876);
-		std::cout << py::extract<std::string>(py::str(instance_derived))() << std::endl;
+		std::cout << "instance_derived = " << py::extract<std::string>(py::str(instance_derived))() << std::endl;
 		
 		// 
 		// std::shared_ptr<Base> a = asla("hello.PythonDerived");
@@ -57,6 +62,7 @@ TEST(PythonTest, Test1)
 	}
 	catch (const py::error_already_set& /*e*/)
 	{
+		LOGE("exception in boost::python ...");
 		PyErr_Print();
 	}
 }
