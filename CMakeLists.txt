@@ -21,9 +21,8 @@ get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
 get_filename_component(PYTHON3_PARENT_DIR ${PYTHON3_DIR} DIRECTORY)
 cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
 
-# test python embed
-cmaki2_gtest(test_06 tests/test_06.cpp PTHREADS)
-set_tests_properties(test_06_exe PROPERTIES ENVIRONMENT "PYTHONHOME=${PYTHON3_PARENT_DIR}")
+cmaki2_gtest(test_embed tests/test_embed.cpp PTHREADS)
+set_tests_properties(test_embed_exe PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}:PYTHONHOME=${PYTHON3_PARENT_DIR}")
 
 # proposal
 # cmaki_python_test(hello tests/hello.py)
@@ -33,7 +32,7 @@ enable_testing()
 add_test(		NAME hello_test
 			COMMAND ./bin/python3 hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
-set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}:PYTHONPATH=${PYTHON3_PARENT_DIR}")
+set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
 # for testing
 # cmaki_find_package(entityx)

@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+import os
+import sys
+sys.path.append(os.getcwd())
+
 import logging
 import imp
 
@@ -86,3 +90,13 @@ def load_simple_tasks(plugin_folder, main_module = '__init__'):
                 logging.error('A command with name %s is already used. Error registering plugin.' % name)
     else:
         logging.debug('No plugins folder found in %s.' % os.path.abspath(plugin_folder))
+
+def func1(n1, n2, n3, f1, str1):
+    print ("exec in python {} {} {} {} {}".format(n1, n2, n3, f1, str1))
+
+def func2(str1):
+    print ("{}".format(str1))
+
+if __name__ == '__main__':
+    print ("loading embed python.")
+
