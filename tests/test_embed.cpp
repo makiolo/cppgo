@@ -54,7 +54,7 @@ TEST(PythonTest, Test1)
 		LOGI("instanciate PythonDerived class in hello.py ...");
 		py::object class_derived = module_dict["PythonDerived"];
 		py::object instance_derived = class_derived("from c++", 9876);
-		std::cout << "instance_derived = " << py::extract<std::string>(py::str(instance_derived))() << std::endl;
+		std::cout << "PythonDerived.name() = " << py::extract<std::string>(py::str( instance_derived.attr("name")() ))() << std::endl;
 		
 		// 
 		// std::shared_ptr<Base> a = asla("hello.PythonDerived");
