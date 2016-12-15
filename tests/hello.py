@@ -44,7 +44,7 @@ print (dir(factory))
 
 class PythonDerived(factory.Base):
   def name(self):
-    return "PythonDerived"
+    return "base: {} and derived: {}".format(super(PythonDerived, self).name(), "PythonDerived")
 
 f1 = factory.create("A", "hi", 1234)
 f2 = factory.create("B", "hizzz", 1234567)
