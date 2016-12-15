@@ -48,8 +48,8 @@ TEST(PythonTest, Test1)
 		
 		// call static method
 		LOGI("call func1() in hello.py ...");
-		// module_dict["func1"](1, 2, 3, 5.0f, "hiiii from c++");
-		py::call<void>(module_dict, "func1", 1, 2, 3, 5.0f, "hiiii from c++");
+		module_dict["func1"](1, 2, 3, 5.0f, "hiiii from c++");
+		// py::call<void>(module_dict, "func1", 1, 2, 3, 5.0f, "hiiii from c++");
 		
 		// instance class
 		LOGI("call PythonDerived.name() class in hello.py ...");
