@@ -49,7 +49,7 @@ TEST(PythonTest, Test1)
 		// instance class
 		py::object class_derived = module_dict["PythonDerived"];
 		py::object instance_derived = class_derived("from c++", 9876);
-		// 
+		std::cout << py::extract<std::string>(py::str(instance_derived))() << std::endl;
 		
 		// 
 		// std::shared_ptr<Base> a = asla("hello.PythonDerived");
@@ -60,4 +60,3 @@ TEST(PythonTest, Test1)
 		PyErr_Print();
 	}
 }
-
