@@ -74,10 +74,30 @@ public:
 	virtual std::string name() const { return "B_Example"; }
 };
 
+// python to c++
+struct BaseWrapExample : BaseExample, py::wrapper<BaseExample>
+{
+	explicit BaseWrapExample(std::string name, int q) : BaseExample(name, q) { ; }
+	virtual ~BaseWrapExample() = default;
+	
+	virtual std::string name() const
+	{
+		if (override n = this->get_override("name"))
+		    return n();
+		return Base::name();
+	}
+	
+	std::string default_name() const
+	{
+		return this->Base::name();
+	}
+};
+
+// c++ to python
 class PythonDerived : public BaseExample
 {
 public:
-	DEFINE_KEY(PythonDerived)
+	DEFINE_KEY(PythonDerived1)
 	explicit PythonDerived(std::string name, int q) : BaseExample(name, q)
 	{ 
 		// init
@@ -85,7 +105,7 @@ public:
 		py::object globals = mainmodule.attr("__dict__");
 		py::exec_file("hello.py", globals, globals);
 		// instance
-		py::object class_derived = globals["PythonDerived"];
+		py::object class_derived = globals["PythonDerived1"];
 		_instance = class_derived(name, q);
 		/*
 		// call static method
@@ -117,19 +137,50 @@ TEST(PythonTest, Test1)
 {
 	PythonEmbed python;
 	try
-	{		
-		auto base1 = BaseExample::factory::instance().create("PythonDerived", "from factory c++", 1234567);
-		std::cout << "base1 = " << base1->name() << std::endl;
-		
+	{
 		auto base2 = BaseExample::factory::instance().create("A_Example", "from factory c++", 1234567);
 		std::cout << "base2 = " << base2->name() << std::endl;
 		
 		auto base3 = BaseExample::factory::instance().create("B_Example", "from factory c++", 1234567);
 		std::cout << "base3 = " << base3->name() << std::endl;
+		
+		auto base1 = BaseExample::factory::instance().create("PythonDerived1", "from factory c++", 1234567);
+		std::cout << "base1 = " << base1->name() << std::endl;
+		
+		// auto base1 = BaseExample::factory::instance().create("PythonDerived2", "from factory c++", 1234567);
+		// std::cout << "base1 = " << base1->name() << std::endl;
 	}
 	catch (const py::error_already_set& /*e*/)
 	{
 		LOGE("exception in boost::python ...");
 		PyErr_Print();
 	}
+}
+
+object create(tuple args, dict kwargs)
+{
+	return object( BaseExample::factory::instance().create( 	
+								std::string( py::extract<const char*>(py::str(args[0]))() ), 
+								std::string( py::extract<const char*>(py::str(args[1]))() ), 
+								py::extract<int>(args[2])() 
+		      					));
+}
+
+object register_impl(tuple args, dict kwargs)
+{
+	std::cout << "register: " << std::string( py::extract<const char*>(py::str(args[0]))() ) << std::endl;
+	return object();
+}
+
+BOOST_PYTHON_MODULE(test_embed)
+{
+	class_<BaseExample, std::shared_ptr<BaseExample> >("__BaseExample__", init<std::string, int>())
+	;
+	
+	class_<BaseWrapExample, boost::noncopyable >("BaseExample", init<std::string, int>())
+		.def("name", &BaseWrapExample::name, &BaseWrapExample::default_name)
+	;
+	
+   	def("create", raw_function(create));
+	def("register", raw_function(register_impl));
 }
