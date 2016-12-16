@@ -84,12 +84,12 @@ struct BaseWrapExample : BaseExample, py::wrapper<BaseExample>
 	{
 		if (override n = this->get_override("name"))
 		    return n();
-		return Base::name();
+		return BaseExample::name();
 	}
 	
 	std::string default_name() const
 	{
-		return this->Base::name();
+		return this->BaseExample::name();
 	}
 };
 
