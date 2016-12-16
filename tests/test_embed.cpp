@@ -118,13 +118,13 @@ TEST(PythonTest, Test1)
 	PythonEmbed python;
 	try
 	{		
-		auto base1 = Base::factory::instance().create("PythonDerived", "from factory c++", 1234567);
+		auto base1 = BaseExample::factory::instance().create("PythonDerived", "from factory c++", 1234567);
 		std::cout << "base1 = " << base1->name() << std::endl;
 		
-		auto base2 = Base::factory::instance().create("A_Example", "from factory c++", 1234567);
+		auto base2 = BaseExample::factory::instance().create("A_Example", "from factory c++", 1234567);
 		std::cout << "base2 = " << base2->name() << std::endl;
 		
-		auto base3 = Base::factory::instance().create("B_Example", "from factory c++", 1234567);
+		auto base3 = BaseExample::factory::instance().create("B_Example", "from factory c++", 1234567);
 		std::cout << "base3 = " << base3->name() << std::endl;
 	}
 	catch (const py::error_already_set& /*e*/)
