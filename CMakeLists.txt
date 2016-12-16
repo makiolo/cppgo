@@ -29,9 +29,10 @@ set_tests_properties(test_embed_exe PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_I
 # cmaki_python_test(hello tests/hello.py)
 
 cmaki_install_file(tests/hello.py)
+cmaki_install_file(tests/executed_sinde_cpp.py)
+
 enable_testing()
 add_test(		NAME hello_test
 			COMMAND ./bin/python3 hello.py
 			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
 		set_tests_properties(hello_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-
