@@ -103,13 +103,13 @@ public:
 		// init
 		py::object mainmodule = py::import("__main__");
 		py::object globals = mainmodule.attr("__dict__");
-		py::exec_file("hello.py", globals, globals);
+		py::exec_file("executed_sinde_cpp.py", globals, globals);
 		// instance
 		py::object class_derived = globals["PythonDerived1"];
 		_instance = class_derived(name, q);
 		/*
 		// call static method
-		LOGI("call func1() in hello.py");
+		LOGI("call func1() in executed_sinde_cpp.py");
 		globals["func1"](1, 2, 3, 5.0f, "hiiii from c++");
 		*/
 	}
