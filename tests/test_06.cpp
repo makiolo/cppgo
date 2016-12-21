@@ -9,6 +9,7 @@
 #include <boost/python/exec.hpp>
 #include <boost/python/dict.hpp>
 #include <boost/python/extract.hpp>
+#include <boost/any.hpp>
 
 using namespace boost::python;
 namespace py = boost::python;
@@ -97,9 +98,11 @@ std::ostream& operator<<(std::ostream& os, const py::str& o)
 
 object create(tuple args, dict kwargs)
 {
+	std::vector< boost::any > v;
 	for(int i = 0; i < len(args); ++i)
 	{
-		std::cout << "cout: " << py::str(args[i]) << std::endl;
+		// std::cout << "cout: " << py::str(args[i]) << std::endl;
+		v.emplace_back(args[i]);
 	}
 	
 	return object( Base::factory::instance().create( 	std::string( py::extract<const char*>(py::str(args[0]))() ), 
