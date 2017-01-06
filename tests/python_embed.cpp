@@ -40,12 +40,12 @@ struct PythonEmbed
 
 TEST(PythonTest, Test1)
 {
-	// reg c++ implementations
-	init_factory();
-
 	PythonEmbed python;
 	try
 	{
+		// reg implementations
+		init_factory();
+
 		// register python implementations
 		py::object mainmodule = py::import("__main__");
 		py::object globals = mainmodule.attr("__dict__");
