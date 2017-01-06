@@ -78,14 +78,25 @@
 #             print(content)
 
 import foo_python
+
 foo_python.init()
 
 f1 = foo_python.create("A", "AAAA", 1234)
-print ("A.name() = %s" % f1.name())
+print (f1)
 f2 = foo_python.create("B", "BBBB", 1234567)
+print (f2)
+
+try:
+    f3 = foo_python.create("PythonDerived1", "PPPPP", 1234567890)
+    print (f3)
+except KeyError:
+    import traceback
+    traceback.print_exc()
+
+
+
+
+print ("A.name() = %s" % f1.name())
 print ("B.name() = %s" % f2.name())
-f3 = foo_python.create("PythonDerived1", "PPPPP", 1234567890)
-print ("P.name() = %s" % f3.name())
-# f4 = foo_python.create("PythonDerived2", "QQQQQ", 1234567891)
-# print ("Q.name() = %s" % f4.name())
+# print ("P.name() = %s" % f3.name())
 

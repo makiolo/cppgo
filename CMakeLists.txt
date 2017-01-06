@@ -13,7 +13,7 @@ cmaki_find_package(teelogging)
 cmaki_library(foo tests/foo.cpp)
 cmaki_library(fooA tests/fooA.cpp DEPENDS foo)
 cmaki_library(fooB tests/fooB.cpp DEPENDS foo)
-cmaki_library(foo_python tests/foo_python.cpp DEPENDS foo)
+cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
 
 # cmaki_python_library(hello tests/test_01.cpp)
 # cmaki_python_library(classes tests/test_02.cpp)
