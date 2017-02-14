@@ -60,12 +60,12 @@ constexpr auto apply(Function&& f, Tuple&& t) {
 
 object create(py::tuple args, py::dict kwargs)
 {
-	//auto new_args = expand<std::string, std::string, int>( args );
+	auto new_args = expand<std::string, std::string, int>(args);
+	
 	std::cout << "--------------------" << std::endl;
-	std::cout << std::string( py::extract<const char*>(py::str(args[0]))() ) << std::endl;
-	std::cout << py::extract<std::string>(py::str(args[0]))() << std::endl;
-	std::cout << std::string( py::extract<const char*>(args[0])() ) << std::endl;
-	std::cout << py::extract<std::string>(args[0])() << std::endl;
+	std::cout << std::get<0>(new_args) << std::endl;
+	std::cout << std::get<1>(new_args) << std::endl;
+	std::cout << std::get<2>(new_args) << std::endl;
 	std::cout << "--------------------" << std::endl;
 
 	return object( foo::Base::get_factory().create(
