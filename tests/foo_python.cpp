@@ -1,6 +1,8 @@
 #include "foo_python.h"
 //
 #include <boost/python.hpp>
+#include <tuple>
+#include <type_traits>
 
 namespace regBasePythonic {
 	foo::Base::factory::registrator<BasePythonic> reg(	foo::Base::get_factory() );
@@ -19,7 +21,7 @@ object init_impl(tuple args, dict kwargs)
 	return object();
 }
 
-#if 0
+#if 1
 
 template<typename ... Args>
 class get_type
@@ -84,4 +86,3 @@ BOOST_PYTHON_MODULE(foo_python)
    	def("create", raw_function(create, 3));
 	def("init", raw_function(init_impl));
 }
-
