@@ -35,7 +35,6 @@ public:
 	{
 		std::cout << "constructor " << _name << " - " << _q << std::endl;
 	}
-	virtual ~Base() = default;
 
 protected:
 	std::string _name;

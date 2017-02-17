@@ -18,7 +18,6 @@ struct PythonEmbed
 {
 	PythonEmbed()
 	{
-		LOGI("creating python ...");
 		program = Py_DecodeLocale("python_embed", NULL);
 		if (program == NULL) {
 			fprintf(stderr, "Fatal error: cannot decode\n");
@@ -30,7 +29,6 @@ struct PythonEmbed
 
 	~PythonEmbed()
 	{
-		LOGI("destroying python ...");
 		Py_Finalize();
 		PyMem_RawFree(program);
 	}
@@ -43,34 +41,28 @@ TEST(PythonTest, Test1)
 	PythonEmbed python;
 	try
 	{
-		// reg implementations
+		// reg c++ implementations
 		init_factory();
-
-		// register python implementations
-		py::object mainmodule = py::import("__main__");
-		py::object globals = mainmodule.attr("__dict__");
-		py::exec_file("fooA_python.py", globals, globals);
-
-		auto base1 = foo::Base::get_factory().create("A", "create c++ from factory c++", 111);
-		std::cout << "base1 = " << base1->getKEY() << " end" << std::endl;
-
-		auto base2 = foo::Base::get_factory().create("B", "create c++ from factory c++", 222);
-		std::cout << "base2 = " << base2->getKEY() << " end" << std::endl;
 
 		try
 		{
-		std::cout << "------------------------" << std::endl;
-		auto base3 = foo::Base::get_factory().create("PythonDerived1", "create python from factory c++", 333);
-		std::cout << "base3 = " << base3->getKEY() << " end" <<  std::endl;
-		std::cout << "------------------------" << std::endl;
+			auto base1 = foo::Base::get_factory().create("A", "create c++ from factory c++", 1);
+			LOGI("%s", base1->getKEY().c_str());
+
+			auto base2 = foo::Base::get_factory().create("B", "create c++ from factory c++", 2);
+			LOGI("%s", base2->getKEY().c_str());
+
+			auto base3 = foo::Base::get_factory().create("Python", "PythonDerived1", 3);
+			LOGI("%s", base3->getKEY().c_str());
+
+			auto base4 = foo::Base::get_factory().create("Python", "PythonDerived2", 4);
+			LOGI("%s", base4->getKEY().c_str());
 		}
 		catch(const std::exception& e)
 		{
 			std::cout << e.what() << std::endl;
 		}
 
-		// auto base4 = foo::Base::get_factory().create("PythonDerived2", "create python from factory c++", 999);
-		// std::cout << "base4 = " << base4->getKEY() << " end" <<  std::endl;
 	}
 	catch (const py::error_already_set& /*e*/)
 	{

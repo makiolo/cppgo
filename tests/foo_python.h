@@ -27,36 +27,52 @@ namespace py = boost::python;
     #endif
 #endif
 
-struct foo_python_API BasePythonic : foo::Base
+struct foo_python_API BasePythonInterface : foo::Base, py::wrapper<foo::Base>
 {
-public:
-	explicit BasePythonic(const std::string& name, int q)
-		: foo::Base(name, q)
+	explicit BasePythonInterface(const std::string& name, int q) : foo::Base(name, q)
 	{
-		// init
-		py::object mainmodule = py::import("__main__");
-		py::object globals = mainmodule.attr("__dict__");
-		// instance
-		py::object class_derived = globals[BasePythonic::KEY()];
-		_instance = class_derived(name, q);
+		std::cout << "contructor BasePythonInterface" << std::endl;
 	}
-	virtual ~BasePythonic() = default;
 
-	constexpr static char const* KEY() { return "PythonDerived1"; }
 	virtual const std::string& getKEY() const
 	{
-		// if (override n = this->get_override("name"))
-		//     return n();
-		auto result = _instance.attr("name")();
-		static std::string name = py::extract<std::string>(py::str(result))();
-		return name;
+		if(override n = this->get_override("name"))
+			return n();
+		return this->foo::Base::getKEY();
+	}
+
+	virtual const std::string& getKEY_default() const
+	{
+		return this->foo::Base::getKEY();
+	}
+};
+
+struct foo_python_API BasePythonImpl : foo::Base, py::object
+{
+public:
+	explicit BasePythonImpl(const std::string& name, int q) 
+		: foo::Base(name, q)
+		, py::object( py::import("__main__").attr("__dict__")[name](name, q) )
+	{
+		;
+	}
+	virtual ~BasePythonImpl() = default;
+
+	constexpr static char const* KEY() { return "Python"; }
+	virtual const std::string& getKEY() const
+	{
+		auto it = _cache_strs.find("name");
+		if(it == _cache_strs.end())
+			_cache_strs["name"] = py::extract<std::string>( attr("name")() )( );
+		return _cache_strs["name"];
 	}
 protected:
-	py::object _instance;
+	mutable std::map<std::string, std::string> _cache_strs;
 };
 
 void init_factory()
 {
+	// register c++ implementations
 	load_library fooA("fooA");
 	load_library fooB("fooB");
 
@@ -64,7 +80,7 @@ void init_factory()
 	py::object mainmodule = py::import("__main__");
 	py::object globals = mainmodule.attr("__dict__");
 	py::exec_file("fooA_python.py", globals, globals);
-
+	py::exec_file("fooB_python.py", globals, globals);
 }
 
 

@@ -33,6 +33,7 @@ set_tests_properties(python_embed_exe PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE
 
 # call c++ since python
 cmaki_install_file(tests/fooA_python.py)
+cmaki_install_file(tests/fooB_python.py)
 enable_testing()
 add_test(	NAME cpp_embed_test
 			COMMAND ./bin/python3 cpp_embed.py
