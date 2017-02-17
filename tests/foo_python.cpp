@@ -23,13 +23,6 @@ object init_impl(tuple args, dict kwargs)
 
 #if 1
 
-template<typename ... Args>
-class get_type
-{
-    template <std::size_t N>
-    using type = typename std::tuple_element<N, std::tuple<Args...> >::type;
-};
-
 template <class F, size_t... Is>
 constexpr auto index_apply_impl(F&& f, std::index_sequence<Is...>) {
     return std::forward<F>(f)(std::integral_constant<size_t, Is> {}...);
@@ -45,8 +38,7 @@ constexpr auto expand(const py::tuple& t) {
     return index_apply<sizeof...(Args)>(
         [&](auto... Is) {
         	return make_tuple(
-			py::extract< get_type<Args...>::type<Is> >(t[Is])()...
-			// py::extract< decltype(std::get<Is>(std::tuple<Args...>())) >(t[Is])()...
+			py::extract< typename std::tuple_element<Is, std::tuple<Args...> >::type >(t[Is])()...
 		);
         });
 }
