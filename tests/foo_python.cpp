@@ -64,7 +64,7 @@ object create(py::tuple args, py::dict kwargs)
 	std::cout << std::get<2>(expand<std::string, std::string, int>(args)) << std::endl;
 	std::cout << "--------------------" << std::endl;
 	*/
-	return object( apply(foo::Base::get_factory().create, expand<std::string, std::string, int>(args)) );
+	return object( apply(&foo::Base::get_factory().create, expand<std::string, std::string, int>(args)) );
 	/*
 	return object( foo::Base::get_factory().create(
 								std::string( py::extract<const char*>(py::str(args[0]))() ),
