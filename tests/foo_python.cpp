@@ -38,9 +38,9 @@ constexpr auto expand(const py::tuple& t) {
     return index_apply<sizeof...(Args)>(
         [&](auto... Is) {
         	return make_tuple(
-			boost::ref(
-				py::extract< typename std::tuple_element<Is, std::tuple<Args...> >::type >(t[Is])()...
-			)
+			// boost::ref(
+			py::extract< typename std::tuple_element<Is, std::tuple<Args...> >::type >(t[Is])()...
+			// )
 		);
         });
 }
