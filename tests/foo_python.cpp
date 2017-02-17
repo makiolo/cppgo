@@ -38,7 +38,9 @@ constexpr auto expand(const py::tuple& t) {
     return index_apply<sizeof...(Args)>(
         [&](auto... Is) {
         	return make_tuple(
-			py::extract< typename std::tuple_element<Is, std::tuple<Args...> >::type >(t[Is])()...
+			boost::ref(
+				py::extract< typename std::tuple_element<Is, std::tuple<Args...> >::type >(t[Is])()...
+			)
 		);
         });
 }
@@ -47,7 +49,7 @@ template <typename Function, typename Tuple>
 constexpr auto apply(Function&& f, Tuple&& t) {
     return index_apply<std::tuple_size<Tuple>{}>(
         [&](auto... Is) {
-            return std::forward<Function>(f)( std::get<Is>(std::forward<Tuple>(t))... );
+		return std::forward<Function>(f)( std::get<Is>(std::forward<Tuple>(t))... );
         });
 }
 
@@ -55,17 +57,21 @@ constexpr auto apply(Function&& f, Tuple&& t) {
 
 object create(py::tuple args, py::dict kwargs)
 {
+	/*
 	std::cout << "--------------------" << std::endl;
 	std::cout << std::get<0>(expand<std::string, std::string, int>(args)) << std::endl;
 	std::cout << std::get<1>(expand<std::string, std::string, int>(args)) << std::endl;
 	std::cout << std::get<2>(expand<std::string, std::string, int>(args)) << std::endl;
 	std::cout << "--------------------" << std::endl;
-
+	*/
+	return object( apply(foo::Base::get_factory().create, expand<std::string, std::string, int>(args)) );
+	/*
 	return object( foo::Base::get_factory().create(
 								std::string( py::extract<const char*>(py::str(args[0]))() ),
 								std::string( py::extract<const char*>(py::str(args[1]))() ),
 								py::extract<int>(args[2])()
 		      				));
+	*/
 }
 
 BOOST_PYTHON_MODULE(foo_python)
