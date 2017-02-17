@@ -32,7 +32,7 @@ class get_type
 
 template <class F, size_t... Is>
 constexpr auto index_apply_impl(F&& f, std::index_sequence<Is...>) {
-    return f(std::integral_constant<size_t, Is> {}...);
+    return std::forward<Function>(f)(std::integral_constant<size_t, Is> {}...);
 }
 
 template <size_t N, class F>
@@ -40,12 +40,13 @@ constexpr auto index_apply(F&& f) {
     return index_apply_impl(std::forward<F>(f), std::make_index_sequence<N>{});
 }
 
-template <class Args...>
+template <typename ... Args>
 constexpr auto expand(const py::tuple& t) {
     return index_apply<sizeof...(Args)>(
         [&](auto... Is) {
         	return make_tuple(
-			py::extract< get_type<Args...>::type<Is> >(t[Is])()...
+			// py::extract< get_type<Args...>::type<Is> >(t[Is])()...
+			py::extract< decltype(std::get<Is>(std::tuple<Args...>())) >(t[Is])()...
 		);
         });
 }
@@ -62,12 +63,10 @@ constexpr auto apply(Function&& f, Tuple&& t) {
 
 object create(py::tuple args, py::dict kwargs)
 {
-	auto new_args = expand<std::string, std::string, int>(args);
-	
 	std::cout << "--------------------" << std::endl;
-	std::cout << std::get<0>(new_args) << std::endl;
-	std::cout << std::get<1>(new_args) << std::endl;
-	std::cout << std::get<2>(new_args) << std::endl;
+	std::cout << std::get<0>(expand<std::string, std::string, int>(args)) << std::endl;
+	std::cout << std::get<1>(expand<std::string, std::string, int>(args)) << std::endl;
+	std::cout << std::get<2>(expand<std::string, std::string, int>(args)) << std::endl;
 	std::cout << "--------------------" << std::endl;
 
 	return object( foo::Base::get_factory().create(
