@@ -32,7 +32,7 @@ class get_type
 
 template <class F, size_t... Is>
 constexpr auto index_apply_impl(F&& f, std::index_sequence<Is...>) {
-    return std::forward<Function>(f)(std::integral_constant<size_t, Is> {}...);
+    return std::forward<F>(f)(std::integral_constant<size_t, Is> {}...);
 }
 
 template <size_t N, class F>
