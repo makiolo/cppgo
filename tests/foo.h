@@ -76,10 +76,12 @@ class load_library
 public:
 	load_library(const std::string& libname, const std::string& prefix = "lib")
 	{
+		printf("loading %s%s\n", prefix.c_str(), libname.c_str());
 		_handle = dlopen((prefix + libname + ".so").c_str(), RTLD_NOW); // RTLD_LAZY
-		if (!_handle)
+		// _handle = dlopen((prefix + libname + ".so").c_str(), RTLD_LAZY); // RTLD_LAZY
+		if (_handle == nullptr)
 		{
-			fputs (dlerror(), stderr);
+			// fputs (dlerror(), stderr);
 			throw std::runtime_error("error loading library");
 		}
 	}

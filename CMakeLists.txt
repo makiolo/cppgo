@@ -15,12 +15,6 @@ cmaki_library(fooA tests/fooA.cpp DEPENDS foo)
 cmaki_library(fooB tests/fooB.cpp DEPENDS foo)
 cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
 
-# cmaki_python_library(hello tests/test_01.cpp)
-# cmaki_python_library(classes tests/test_02.cpp)
-# cmaki_python_library(ctor tests/test_03.cpp)
-# cmaki_python_library(member tests/test_04.cpp)
-# cmaki_python_library(inheritance tests/test_05.cpp)
-
 # install python
 get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
 get_filename_component(PYTHON3_PARENT_DIR ${PYTHON3_DIR} DIRECTORY)
@@ -28,7 +22,7 @@ cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
 
 # call python since c++
 cmaki_install_file(tests/cpp_embed.py)
-cmaki2_gtest(python_embed tests/python_embed.cpp PTHREADS DEPENDS foo)
+cmaki2_gtest(python_embed tests/python_embed.cpp PTHREADS DEPENDS foo dl)
 set_tests_properties(python_embed_exe PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
 # call c++ since python
