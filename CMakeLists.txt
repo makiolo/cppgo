@@ -5,32 +5,23 @@ set(CMAKI_REPOSITORY "http://artifacts.myftp.biz:8080")
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmaki/cmaki.cmake")
 cmaki_setup()
 
-cmaki_find_package(python)
-cmaki_find_package(boost-python)
-cmaki_find_package(design-patterns-cpp14)
 cmaki_find_package(teelogging)
+cmaki_find_package(design-patterns-cpp14)
+cmaki_install_python()
 
+# c++ implementations
 cmaki_library(foo tests/foo.cpp)
 cmaki_library(fooA tests/fooA.cpp DEPENDS foo)
 cmaki_library(fooB tests/fooB.cpp DEPENDS foo)
-cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
-
-# install python
-get_filename_component(PYTHON3_DIR ${PYTHON3_EXECUTABLE} DIRECTORY)
-get_filename_component(PYTHON3_PARENT_DIR ${PYTHON3_DIR} DIRECTORY)
-cmaki_install_inside_dir(${PYTHON3_PARENT_DIR})
-
-# call python since c++
-cmaki_install_file(tests/cpp_embed.py)
-cmaki2_gtest(python_embed tests/python_embed.cpp PTHREADS DEPENDS foo dl)
-set_tests_properties(python_embed_exe PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-
-# call c++ since python
+# python implementations
 cmaki_install_file(tests/fooA_python.py)
 cmaki_install_file(tests/fooB_python.py)
-enable_testing()
-add_test(	NAME cpp_embed_test
-			COMMAND ./bin/python3 cpp_embed.py
-			WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
-set_tests_properties(cpp_embed_test PROPERTIES ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
 
+# need for do "import foo_python" since python
+cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
+
+# c++ program using factory
+cmaki_python_gtest(python_embed tests/python_embed.cpp DEPENDS foo)
+
+# python program using factory
+cmaki_python_test(cpp_embed cpp_embed.py)
