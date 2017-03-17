@@ -25,3 +25,4 @@ cmaki_python_gtest(python_embed tests/python_embed.cpp DEPENDS foo)
 
 # python program using factory
 cmaki_python_test(cpp_embed tests/cpp_embed.py)
+
