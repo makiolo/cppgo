@@ -7,7 +7,7 @@ cmaki_setup()
 
 cmaki_find_package(teelogging)
 cmaki_find_package(design-patterns-cpp14)
-cmaki_install_python()
+cmaki_python_install()
 
 # c++ implementations
 cmaki_library(foo tests/foo.cpp)
@@ -21,7 +21,7 @@ cmaki_install_file(tests/fooB_python.py)
 cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
 
 # c++ program using factory
-cmaki_python_gtest(python_embed tests/python_embed.cpp DEPENDS foo)
+cmaki_boost_python_test(python_embed tests/python_embed.cpp DEPENDS foo)
 
 # python program using factory
 cmaki_python_test(cpp_embed cpp_embed.py)
