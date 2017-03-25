@@ -3,7 +3,6 @@ import foo_python
 def info(msg):
     print('[INFO] {}'.format(msg))
 
-info('foo_python.init()')
 foo_python.init()
 
 info('foo_python.create("A, ....")')
@@ -22,3 +21,4 @@ info("1.name() = %s" % f1.name())
 info("2.name() = %s" % f2.name())
 info("3.name() = %s" % f3.name())
 info("4.name() = %s" % f4.name())
+

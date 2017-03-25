@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 #include <dp14/factory.h>
 #include "foo.h"
-#include "foo_python.h"
+// #include "foo_python.h"
 
 using namespace boost::python;
 namespace py = boost::python;
@@ -35,6 +35,21 @@ struct PythonEmbed
 
 	wchar_t *program;
 };
+
+bool init_factory()
+{
+	// register c++ implementations
+	static load_library fooA("fooA");
+	static load_library fooB("fooB");
+
+	// register python implementations
+	py::object mainmodule = py::import("__main__");
+	py::object globals = mainmodule.attr("__dict__");
+	py::exec_file("fooA_python.py", globals, globals);
+	py::exec_file("fooB_python.py", globals, globals);
+	return true;
+}
+
 
 TEST(PythonTest, Test1)
 {

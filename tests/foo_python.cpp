@@ -8,9 +8,18 @@ namespace regBasePythonic {
 	foo::Base::factory::registrator<BasePythonImpl> reg(	foo::Base::get_factory() );
 }
 
-void init_impl()
+bool init_factory()
 {
-	init_factory();
+	// register c++ implementations
+	static load_library fooA("fooA");
+	static load_library fooB("fooB");
+
+	// register python implementations
+	py::object mainmodule = py::import("__main__");
+	py::object globals = mainmodule.attr("__dict__");
+	py::exec_file("fooA_python.py", globals, globals);
+	py::exec_file("fooB_python.py", globals, globals);
+	return true;
 }
 
 template <typename ... Args, size_t... Is>
@@ -69,6 +78,6 @@ BOOST_PYTHON_MODULE(foo_python)
 	;
    	def("create", raw_function(create_ref<foo::Base, std::string, std::string, int>, 3));
    	def("create2", create_copy<foo::Base, std::string, std::string, int>);
-	def("init", init_impl);
+   	def("init", init_factory);
 }
 

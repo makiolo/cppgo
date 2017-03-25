@@ -70,20 +70,7 @@ protected:
 	mutable std::map<std::string, std::string> _cache_strs;
 };
 
-bool init_factory()
-{
-	// register c++ implementations
-	load_library fooA("fooA");
-	load_library fooB("fooB");
-
-	// register python implementations
-	py::object mainmodule = py::import("__main__");
-	py::object globals = mainmodule.attr("__dict__");
-	py::exec_file("fooA_python.py", globals, globals);
-	py::exec_file("fooB_python.py", globals, globals);
-	return true;
-}
-
+bool init_factory();
 
 #endif
 
