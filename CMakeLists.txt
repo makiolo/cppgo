@@ -1,18 +1,16 @@
 project(cppgo CXX)
-cmake_minimum_required(VERSION 3.2.2)
+cmake_minimum_required(VERSION 3.0)
 
-set(CMAKI_REPOSITORY "http://artifacts.myftp.biz:8080")
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmaki/cmaki.cmake")
-cmaki_setup()
+include("$ENV{CMAKI_PWD}/node_modules/cmaki/cmaki.cmake")
 
 cmaki_find_package(teelogging)
 cmaki_find_package(design-patterns-cpp14)
 cmaki_python_install()
 
 # c++ implementations
-cmaki_library(foo tests/foo.cpp)
-cmaki_library(fooA tests/fooA.cpp DEPENDS foo)
-cmaki_library(fooB tests/fooB.cpp DEPENDS foo)
+cmaki_simple_library(foo tests/foo.cpp)
+cmaki_simple_library(fooA tests/fooA.cpp DEPENDS foo)
+cmaki_simple_library(fooB tests/fooB.cpp DEPENDS foo)
 # python implementations
 cmaki_install_file(tests/fooA_python.py)
 cmaki_install_file(tests/fooB_python.py)
@@ -28,4 +26,3 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	cmaki_python_test(cpp_embed cpp_embed.py)
 	cmaki_install_file(tests/cpp_embed.py)
 endif()
-
