@@ -21,8 +21,6 @@ cmaki_python_library(foo_python tests/foo_python.cpp DEPENDS foo)
 # c++ program using factory
 cmaki_boost_python_test(python_embed tests/python_embed.cpp DEPENDS foo)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	# python program using factory
-	cmaki_python_test(cpp_embed cpp_embed.py)
-	cmaki_install_file(tests/cpp_embed.py)
-endif()
+# python program using c++ factory
+cmaki_python_test(cpp_embed cpp_embed.py)
+cmaki_install_file(tests/cpp_embed.py)
