@@ -1,0 +1,30 @@
+{
+  "name": "cppgo",
+  "version": "1.0.0",
+  "description": "Implementation of channel and other ideas inspired by Go",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makiolo/cppgo.git"
+  },
+  "keywords": [
+    "c++",
+    "python"
+  ],
+  "author": "Ricardo Marmolejo Garcia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/makiolo/cppgo/issues"
+  },
+  "dependencies": {
+    "cmaki": "git+https://github.com/makiolo/cmaki.git",
+    "cmaki_generator": "git+https://github.com/makiolo/cmaki_generator.git",
+    "cmaki_identifier": "git+https://github.com/makiolo/cmaki_identifier.git",
+    "cmaki_scripts": "git+https://github.com/makiolo/cmaki_scripts.git",
+    "teelogging": "https://github.com/makiolo/teelogging.git",
+    "design-patterns-cpp14": "https://github.com/makiolo/design-patterns-cpp14.git"
+  },
+  "homepage": "https://github.com/makiolo/cppgo#readme"
+}
