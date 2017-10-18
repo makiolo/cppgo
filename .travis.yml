@@ -1,13 +1,5 @@
 language: c
 services: docker
 os: linux
-env:
-  - IMAGE=linux-x64
-  # - IMAGE=windows-x86
-  # - IMAGE=windows-x64
-  # - IMAGE=linux-x86
-  # - IMAGE=android-arm
-  # - IMAGE=browser-asmjs
 script:
-  # - npm run docker
-  - echo disabled from travis && exit 1
+  - npm run docker
