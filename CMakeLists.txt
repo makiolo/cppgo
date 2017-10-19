@@ -5,8 +5,8 @@ include("$ENV{CMAKI_PWD}/node_modules/cmaki/cmaki.cmake")
 
 cmaki_find_package(teelogging)
 cmaki_find_package(design-patterns-cpp14)
-cmaki_find_package(boost-python)
-cmaki_find_package(python)
+
+# install python integrated
 cmaki_python_install()
 
 # c++ implementations
