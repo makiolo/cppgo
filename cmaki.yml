@@ -1,8 +1,9 @@
 - cppgo:
     <<: *thirdparty_defaults
-    version: 0.0.0.0
-    version_manager: git
     post_install:
         - ./*.h include/cppgo
-    mode: dr
     source: https://github.com/makiolo/cppgo.git
+    build:
+        |
+            #!/bin/bash
+            CMAKI_INSTALL=$SELFHOME npm install
