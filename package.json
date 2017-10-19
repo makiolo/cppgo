@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Implementation of channel and other ideas inspired by Go",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ci": "curl -s https://raw.githubusercontent.com/makiolo/cmaki_scripts/master/ci.sh | bash",
+    "docker": "curl -s https://raw.githubusercontent.com/makiolo/cmaki_scripts/master/docker.sh | bash",
+    "clean": "cmaki clean",
+    "setup": "cmaki setup",
+    "compile": "cmaki compile",
+    "install": "cmaki setup && cmaki compile",
+    "test": "cmaki test",
+    "upload": "cmaki upload"
   },
   "repository": {
     "type": "git",
