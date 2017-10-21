@@ -1,5 +1,8 @@
 - cppgo:
     <<: *thirdparty_defaults
+    depends:
+        - design-patterns-cpp14
+        - teelogging
     post_install:
         - ./*.h include/cppgo
     source: https://github.com/makiolo/cppgo.git
