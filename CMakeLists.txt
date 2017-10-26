@@ -26,3 +26,4 @@ cmaki_boost_python_test(python_embed tests/python_embed.cpp DEPENDS foo)
 # python program using c++ factory
 cmaki_python_test(cpp_embed cpp_embed.py)
 cmaki_install_file(tests/cpp_embed.py)
+
