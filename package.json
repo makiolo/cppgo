@@ -25,11 +25,9 @@
   "bugs": {
     "url": "https://github.com/makiolo/cppgo/issues"
   },
-  "dependencies": {
-    "cmaki": "git+https://github.com/makiolo/cmaki.git",
-    "cmaki_generator": "git+https://github.com/makiolo/cmaki_generator.git",
-    "cmaki_identifier": "git+https://github.com/makiolo/cmaki_identifier.git",
-    "cmaki_scripts": "git+https://github.com/makiolo/cmaki_scripts.git",
+  "devDependencies": {
+    "npm-mas-mas": "git+https://github.com/makiolo/npm-mas-mas.git",
+    "metacommon": "https://github.com/makiolo/metacommon.git",
     "teelogging": "https://github.com/makiolo/teelogging.git",
     "design-patterns-cpp14": "https://github.com/makiolo/design-patterns-cpp14.git"
   },

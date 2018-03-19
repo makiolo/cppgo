@@ -3,6 +3,7 @@
     depends:
         - design-patterns-cpp14
         - teelogging
+        - metacommon
     post_install:
         - ./*.h include/cppgo
     source: https://github.com/makiolo/cppgo.git
